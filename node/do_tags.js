@@ -2,9 +2,12 @@ var http = require('http');
 var cp = require('child_process');
 var querystring = require('querystring');
 
-var pre_url = "http://ws.audioscrobbler.com/2.0/?method=track.getinfo&api_key=b9fcc83f7c692ebc10b2b0ec69841605&artist=";
-var dat = []; //artist, song, image
-var dat_obj = {};
+var track_pre_url = "http://ws.audioscrobbler.com/2.0/?method=track.getinfo&api_key=b9fcc83f7c692ebc10b2b0ec69841605&artist=";
+var artist_pre_url = "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=";
+var artist_su_url = "&api_key=b9fcc83f7c692ebc10b2b0ec69841605&format=json";
+var album_pre_url = "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=b9fcc83f7c692ebc10b2b0ec69841605&artist="
+var dat = {}; //artist, song, image
+// var dat_obj = {};
 var datJson = "";
 var back_song = "", back_artist = "", back_album = "", back_next = "", back_img = "";
 
@@ -44,15 +47,15 @@ function get_meta() {
     var track = title_arr[title_arr.length - 1].trim();
     //track = track.replace(/[{()}]/g, '');
     // console.log(track);
-    var real_url = pre_url + artist + "&track=" + track + "&format=json" ;
+    var real_url = track_pre_url + artist + "&track=" + track + "&format=json" ;
     var rreal_url = encodeURI(real_url);
 	rreal_url = rreal_url.replace("&#8217;", "%27");
     //console.log(rreal_url);
-    if(dat[0] == artist && dat[1] == track) {
+    if(dat["artist"] == artist && dat["track"] == track) {
         return;
     }
-    dat[0] = artist;
-    dat[1] = track;
+    dat["artist"] = artist;
+    dat["track"] = track;
     mpc = cp.spawnSync('curl', [rreal_url]);
     mpc_data = mpc.stdout.toString();
     if(mpc_data.indexOf("<?") > 0) {
@@ -65,11 +68,11 @@ function get_meta() {
     }
     // console.log(mpc_data);
 	try {
-                mpc_obj = JSON.parse(mpc_data);
+        mpc_obj = JSON.parse(mpc_data);
 	} catch (e) {
 	        console.log("++++++++++++++++++| " + dateTime + " |++++++++++++++++++++++++++++++++");
                 console.log("===================================================");
-                console.log("Last.fm gave shit response!!! Let's try again!");
+                console.log("Last.fm gave shit response for the track!!! Let's try again!");
                 console.log("===================================================");
 	        console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		return ;
@@ -79,26 +82,46 @@ function get_meta() {
     } else {
         var album = artist;
     }
+    
+    var short_track_info = mpc_obj.track.wiki.summary;
+    if(short_track_info == undefined) {
+        dat["short_track"] = "no_short_track_info";
+    } else {
+        dat["short_track"] = short_track_info;
+    }
+
     if(mpc_obj.track != undefined && mpc_obj.track.album != undefined && mpc_obj.track.album.image != undefined) {
         var image_url = mpc_obj.track.album.image[3]['#text'];
     } else {
         image_url = "black_fucker";
     }
-    dat[2] = album;
-    dat[3] = image_url;
-	                console.log("++++++++++++++++++| " + dateTime + " |++++++++++++++++++++++++++++++++");
+    dat["album"] = album;
+    dat["image"] = image_url;
+
+    var real_url = artist_pre_url + artist + artist_su_url;
+    var rreal_url = encodeURI(real_url);
+    rreal_url = rreal_url.replace("&#8217;", "%27");
+    mpc = cp.spawnSync('curl', [rreal_url]);
+    mpc_data = mpc.stdout.toString();
+    try {
+        mpc_obj = JSON.parse(mpc_data);
+	} catch (e) {
+	        console.log("++++++++++++++++++| " + dateTime + " |++++++++++++++++++++++++++++++++");
+                console.log("===================================================");
+                console.log("Last.fm gave shit response for the artist!!! Let's try again!");
+                console.log("===================================================");
+	        console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+		return ;
+	}
+
+	console.log("++++++++++++++++++| " + dateTime + " |++++++++++++++++++++++++++++++++");
     console.log("========================================================");
     console.log(artist);
     console.log(track);
     console.log(album);
     console.log(image_url);
 
-    dat_obj.artist = dat[0];
-    dat_obj.track = dat[1];
-    dat_obj.album = dat[2];
-    dat_obj.image_url = image_url;
-
-    datJson = JSON.stringify(dat_obj);
+    datJson = JSON.stringify(dat);
     console.log(datJson);
     console.log("========================================================");
 	                console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
