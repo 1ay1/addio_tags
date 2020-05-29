@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<!-- 
+	The Basic Radio Console - v1.0.2
+	Copyright (c) 2020 Ayush Bhat;
+-->
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<title>The Radio Psychedelics</title>	
+    
+    <link rel="shortcut icon" href="img/btnPlay.png" />	
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Elusive icons font -->
+	<link rel="stylesheet" href="fonts/elusive-iconfont-master/css/elusive-webfont.css">
+	<!--[if lte IE 7]><script src="fonts/elusive-iconfont-master/lte-ie7.js"></script><![endif]-->
+	
+  <script src="code.jquery.com/jquery-1.9.1.min.js"></script>	
+
+  <script src="build/mediaelement-and-player.min.js"></script>
+  
+  <script  src="cus.js"></script>
+
+	<link rel="stylesheet" href="build/mediaelementplayer.min.css" />
+    
+    <link rel="stylesheet" href="mainstyling.css" />
+    <link rel="stylesheet" href="custom.css" />
+	<style>
+.art-work { width:325px; }
+.art-work {
+    text-align: center;
+    margin-left: 7px;
+}
+body {
+  background-image: url("./img/back.jpg");
+  background-size: cover;
+  /* background-color: rgb(32, 32, 32); */
+}
+</style>
+</head>
+<body>
+
+<!-- FACEBOOK -->
+<!-- <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "../../connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.3&appId=529328167204487";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script> -->
+<!-- FACEBOOK END -->
+
+<div class="flex-cont">
+<div id="container">
+
+	<img id="main_logo" src="img/console_logo.png" alt="Brum Radio" class="header_logo" />
+
+	<audio id="player" src="http://thepsychedelics.club:8888/mix" type="audio/mp3" controls autoplay preload="none"></audio>
+
+	<div id="content_container">
+    <p class="onairnow"><strong><i class="icon-play"></i>On Air Now:</strong></p>
+    <p id="p_cur"><strong>Loading....</strong></p>
+
+    <p><strong>Album:</strong><span class="onairnext"></span></p>
+    <p id="p_album"><strong>Loading....</strong></p>
+        
+     
+        <div id="social">
+            <div class="fb-like" data-href="https://www.brumradio.com " data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            <style> .fb-like span iframe{ margin-top:-3px; }</style>
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Radio Psychedelics - Listen Live" data-url="http://thepsychedelics.club" data-hashtags="radio" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            <div class="g-plusone" data-size="medium"></div>
+<br>
+       <img id="art_fucker" class="art-work" src="./img/default_cover.png">
+           
+        </div>
+        <div id="footer">
+        	
+        	<p>&copy; 2020 <a href="https://twitter.com/PavitRaj1" target="_blank">The Psychedelics Radio #Radio </a>
+        </div>
+	</div><!-- /#content_container -->
+    
+</div><!-- /#container -->
+
+<!-- ---CONTAINTER TWO FOR CHAT
+<div id="containter2" class="chat-flex">
+  <div class="pre_chat">
+    <p>
+      Welcome to The Psychedelics Chat!
+    </p>
+  </div>
+  <div id="chat_form" class="pre_chat">
+    <p>
+    <form id="name_form">
+      <label>Enter your name: <input id="name_text" type="text" required></label>
+    </form>
+    </p>
+  </div>
+  <div class="pre_chat">
+      <p><button id="chat_name_but" type="submit" form="name_form">Submit</button></p>
+  </div>
+</div>
+</div> -->
+
+<!-- Script for MediaElement.js -->
+<script src="mediaelement-config.js"></script>
+
+<!-- On Air Script -->
+<!-- <script language="javascript" type="text/javascript" src="../../brumradio.com/extsrc/streaminfo.html"></script> -->
+
+<!-- jQuery Cycle Plugin -->
+<!-- <script src="../../brumradio.com/extsrc/malsupgithub.html"></script> -->
+
+<!-- Twitter Widget Code -->
+<!-- <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="../../platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script> -->
+
+<!-- Google+ Code -->
+<!-- <script type="text/javascript">
+  window.___gcfg = {lang: 'en-GB'};
+
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '../../apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+<script language="javascript">
+function popUpListen() {
+props=window.open('index.html', 'poppage1', 'toolbars=0, scrollbars=0, location=0, statusbars=0, menubars=0, resizable=0, width=395, height=695, left=0, top=0, title=The Basic Radio Console'); }
+</script> -->
+
+
+
+</body>
+</html>
+

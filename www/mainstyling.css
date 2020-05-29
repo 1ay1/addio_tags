@@ -1,0 +1,105 @@
+/* CORE STYLES */
+/* We recommend you don't edit these. */
+body {
+	margin: 0;
+	padding: 0;
+	font-family: Arial, sans-serif;
+	font-size: 12px;
+	line-height: 1.25;
+	background: #FFFFFF;
+	overflow: hidden;
+}
+
+a { text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+p {
+	margin: 0;
+	padding: 0 0 5px 0;
+}
+
+#container {
+	width: 380px;
+	height: 100%;
+	margin: 0 auto;
+	background-repeat: repeat-x;
+	border: 1px solid #535353;	
+}
+
+#containter2{
+	width: 480px;
+	margin: 0 auto;
+	overflow-wrap: break-word;
+	background-repeat: repeat-x;
+	border: 1px solid #535353;
+}
+
+.flex-cont {
+	display: flex;
+	height: 100%;
+	flex-direction: row;
+}
+
+.flex-cont > .chat-flex {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	overflow-wrap: break-word;
+}
+
+.header_logo {
+	justify-content: center;
+	align-items: center;
+	padding: 0px;
+	width: 30%;
+	text-align: center;
+	display: block;
+	margin-left: 35%;
+	margin-bottom: 5px;
+}
+
+.mejs-container { margin: 0 auto 10px; }
+
+#content_container {
+	padding: 0 20px;
+}
+
+#onair {
+	height: 120px;
+	border-bottom: 1px solid #535353;
+}
+
+#onair a { color: black !important; text-decoration: underline !important; }
+#onair a:hover { text-decoration: none !important; }
+
+.onairnow {
+	font-size: 14px;
+    font-size-adjust:0.5;
+}
+
+#social {
+	padding: 0 0 8px 0;
+	margin: 10px 0;
+	border-bottom: 1px solid #535353;
+}
+
+#promos {
+	width: 340px;
+	height: 287px;
+	padding: 0 0 10px 0;
+	margin: 10px 0;
+	border-bottom: 1px solid #535353;
+	background: url(img/loading.gif) no-repeat 50% 50%;
+}
+
+#promos img {
+	width: 340px;
+	height: 227px;
+	display: none;
+}
+#promos img.first { display: block; }
+
+#footer {
+	text-align: center;
+}

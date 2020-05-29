@@ -1,0 +1,18 @@
+/* YOUR STATION STYLES */
+/* Main Styles you should edit. */
+
+/* Main text colour */
+body { color: #ffffff; }
+
+/* Link colour */
+a { color: #4EE1DF; }
+
+/* Background colour of the player*/
+#container {
+	/* A solid colour for when the gradient isn't compatible. */
+	background-color: rgb(201, 17, 115);
+	
+}
+
+/* Text colour in the On Air box */
+#onair { color: #FFF; }
