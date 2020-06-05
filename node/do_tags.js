@@ -82,7 +82,9 @@ function get_meta() {
     } else {
         var album = artist;
     }
-    
+    console.log(mpc_obj)
+
+    //get the short track info
     var short_track_info = mpc_obj.track.wiki.summary;
     if(short_track_info == undefined) {
         dat["short_track"] = "no_short_track_info";
@@ -90,6 +92,7 @@ function get_meta() {
         dat["short_track"] = short_track_info;
     }
 
+    //get the cover art
     if(mpc_obj.track != undefined && mpc_obj.track.album != undefined && mpc_obj.track.album.image != undefined) {
         var image_url = mpc_obj.track.album.image[3]['#text'];
     } else {
@@ -112,7 +115,15 @@ function get_meta() {
                 console.log("===================================================");
 	        console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		return ;
-	}
+    }
+    
+    //get the long artist info
+    var artist_info = mpc_obj.artist.bio.content;
+    if(artist_info == undefined) {
+        dat["artist_info"] = "no_artist_info";
+    } else {
+        dat["artist_info"] = artist_info;
+    }
 
 	console.log("++++++++++++++++++| " + dateTime + " |++++++++++++++++++++++++++++++++");
     console.log("========================================================");
