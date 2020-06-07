@@ -6,17 +6,28 @@ var track_pre_url = "http://ws.audioscrobbler.com/2.0/?method=track.getinfo&api_
 var artist_pre_url = "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=";
 var artist_su_url = "&api_key=b9fcc83f7c692ebc10b2b0ec69841605&format=json";
 var album_pre_url = "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=b9fcc83f7c692ebc10b2b0ec69841605&artist="
+// dat is for the song meta data only
 var dat = {}; //artist, song, image
 // var dat_obj = {};
+// datJson is for song meta data JSON only
 var datJson = "";
 var back_song = "", back_artist = "", back_album = "", back_next = "", back_img = "";
+var meta_used = 0;
+
+//joke URL
+var joke_url = "http://api.icndb.com/jokes/random";
+
 
 var today = new Date();
 var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 var dateTime =  date+' '+time;
 
+
+// SONG META HANDLER /////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 function get_meta() {
+    meta_used = 1;
     today = new Date();
     date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
     time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
@@ -85,11 +96,19 @@ function get_meta() {
     console.log(mpc_obj)
 
     //get the short track info
-    var short_track_info = mpc_obj.track.wiki.summary;
-    if(short_track_info == undefined) {
-        dat["short_track"] = "no_short_track_info";
-    } else {
-        dat["short_track"] = short_track_info;
+    try {
+        var short_track_info = mpc_obj.track.wiki.summary;
+        if(short_track_info == undefined) {
+            dat["short_track"] = "no_short_track_info";
+        } else {
+            dat["short_track"] = short_track_info;
+        }
+    } catch(e) {
+        if(short_track_info == undefined) {
+            dat["short_track"] = "no_short_track_info";
+        } else {
+            dat["short_track"] = short_track_info;
+        }
     }
 
     //get the cover art
@@ -118,12 +137,41 @@ function get_meta() {
     }
     
     //get the long artist info
-    var artist_info = mpc_obj.artist.bio.content;
-    if(artist_info == undefined) {
-        dat["artist_info"] = "no_artist_info";
-    } else {
-        dat["artist_info"] = artist_info;
+    try {
+        var artist_info = mpc_obj.artist.bio.content;
+        if(artist_info == undefined) {
+            dat["artist_info"] = "no_artist_info";
+        } else {
+            dat["artist_info"] = artist_info;
+        }
+    } catch(e) {
+        if(artist_info == undefined) {
+            dat["artist_info"] = "no_artist_info";
+        } else {
+            dat["artist_info"] = artist_info;
+        }
     }
+
+    //get the joke
+    ////////////////////////joke handler////////////////////////
+    var mpc = cp.spawnSync('curl', [joke_url]);
+    var mpc_data = mpc.stdout.toString();
+    var joke;
+    try {
+        var mpc_data_obj = JSON.parse(mpc_data);
+        if(mpc_data_obj.value.joke == undefined) {
+            joke = "no_joke";
+        } else {
+            joke = mpc_data_obj.value.joke.toString();
+            console.log(joke);
+        }
+    } catch (e) {
+        joke = "no_joke";
+        return "error";
+    }
+    dat['joke'] = joke;
+
+    //////////////////////////////////////////
 
 	console.log("++++++++++++++++++| " + dateTime + " |++++++++++++++++++++++++++++++++");
     console.log("========================================================");
@@ -139,10 +187,10 @@ function get_meta() {
 
 }
 
-var count = 0;
+var count_meta = 0;
 var server = http.createServer(function (req, res) {   //create web server
     if (req.url == '/getmeta') { //check the URL of the current request
-        console.log(dateTime + " ==== Someone requested meta! " + ++count);
+        console.log(dateTime + " ==== Someone requested meta! " + ++count_meta);
         var get_meta_res = get_meta();
         // set response header
         res.writeHead(200, "OK", { 
@@ -161,8 +209,7 @@ var server = http.createServer(function (req, res) {   //create web server
         	res.end();
 	}
     
-    }
-    else
+    } else
         res.end('Invalid Request!');
 
 });
